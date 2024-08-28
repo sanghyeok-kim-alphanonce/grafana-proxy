@@ -27,7 +27,7 @@ const serverProxy = httpProxy.createProxyServer();
 // Proxy server request event handling
 serverProxy.on('proxyReq', function(proxyReq, req, res) {
     // Set the Basic Auth header
-    proxyReq.setHeader('Authorization', `Basic ${process.env.GRAFANA_API_TOKEN}`);
+    proxyReq.setHeader('Authorization', `Bearer ${process.env.GRAFANA_API_TOKEN}`);
 
     // Handle the body of the request if present
     if (req.body) {
@@ -39,7 +39,7 @@ serverProxy.on('proxyReq', function(proxyReq, req, res) {
 });
 
 app.get('/test-callback', async (req, res) => {
-    const targetUrl = `${process.env.GRAFANA_URL}/api/dashboards/uid/edbb1d5f-b9ff-4d21-bda8-10cf5405807b`;
+    const targetUrl = `${process.env.GRAFANA_URL}/${process.env.GRAFANA_DASHBOARD_URL}`;
 
     try {
         // Send a GET request to the Grafana server
